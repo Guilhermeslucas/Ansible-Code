@@ -1,0 +1,6 @@
+---
+- hosts: machines
+  tasks:
+    - name: Install Docker
+      apt: pkg=docker.io state=installed update_cache=true
+
