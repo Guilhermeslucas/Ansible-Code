@@ -8,5 +8,5 @@
 
   handlers:
     - name: Restart Docker
-      shell: gpasswd -a ${USER} docker && reboot
+      shell: gpasswd -a ${USER} docker && service docker restart
       become: true
