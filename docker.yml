@@ -3,4 +3,10 @@
   tasks:
     - name: Install Docker
       apt: pkg=docker.io state=installed update_cache=true
+      notify:
+        - Restart Docker
 
+  handlers:
+    - name: Restart Docker
+      shell: gpasswd -a ${USER} docker && reboot
+      become: true
