@@ -14,7 +14,4 @@
         - Reboot Server
 
     - name: Reboot Server
-      command: shutdown -r now
-      async: 0
-      poll: 0
-      ignore_errors: true
+      command: /sbin/reboot
