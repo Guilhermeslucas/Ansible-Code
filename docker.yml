@@ -10,3 +10,11 @@
     - name: Restart Docker
       shell: gpasswd -a ${USER} docker && service docker restart
       become: true
+      notify:
+        - Reboot Server
+
+    - name: Reboot Server
+      command: shutdown -r now
+      async: 0
+      poll: 0
+      ignore_errors: true
