@@ -1,0 +1,39 @@
+---
+- hosts: machines
+  tasks:
+    - name: Install JDK
+      apt: pkg=openjdk-8-jdk state=installed update_cache=true
+      become: true
+
+    - name: Install nginx
+      apt: pkg=nginx state=installed
+      notify:
+        - Start Nginx
+
+    - name: Add key
+      become: true
+      apt_key:
+        url: "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
+        state: present
+      register: keyadded
+     
+    - name: Add Repo
+      become: true
+      command: sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+      register: repoadded 
+    
+    - name: update
+      become: true
+      apt: update_cache=true
+
+    - name: Install Jenkins
+      when: keyadded|success and repoadded|success
+      apt:
+        name: jenkins
+        force: yes
+        update_cache: yes
+      become: true
+
+  handlers:
+    - name: Start Nginx
+      service: name=nginx state=restarted
