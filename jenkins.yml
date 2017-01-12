@@ -22,18 +22,14 @@
       command: sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
       register: repoadded 
     
-    - name: update
-      become: true
-      apt: update_cache=true
-
     - name: Install Jenkins
       when: keyadded|success and repoadded|success
       apt:
+        update_cache: yes
         name: jenkins
         force: yes
-        update_cache: yes
       become: true
 
   handlers:
     - name: Start Nginx
-      service: name=nginx state=restarted
+      service: name=nginx state=started
