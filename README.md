@@ -1,3 +1,4 @@
 #Ansible-Code
 
-This are some simple playbooks I've made while learning some Ansible.
+These are some simple playbooks I've made while learning Ansible.
+Feel free to contact me and make suggestions.
