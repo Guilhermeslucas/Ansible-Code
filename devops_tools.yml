@@ -1,0 +1,6 @@
+---
+#playbook used to install two really important devops tools
+#learning some include statements
+
+- include: docker.yml
+- include: jenkins.yml

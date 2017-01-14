@@ -1,17 +1,14 @@
 ---
 - hosts: machines
   tasks:
+    #task to install Docker on the servers
     - name: Install Docker
       apt: pkg=docker.io state=installed update_cache=true
       notify:
         - Restart Docker
 
   handlers:
+    #making possible to use docker without sudo command
     - name: Restart Docker
       shell: gpasswd -a ${USER} docker && service docker restart
       become: true
-      notify:
-        - Reboot Server
-
-    - name: Reboot Server
-      command: /sbin/reboot
