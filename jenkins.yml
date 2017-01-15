@@ -13,7 +13,7 @@
         state: latest
       when: ansible_os_family == "RedHat"
 
-    #install jenkins and dependencies on RedHat Based
+    #install jenkins and it's dependencies on RedHat Based
     - name: Install Jenkins on RedHat Based
       dnf: name={{ item }} state=latest
       with_items:
