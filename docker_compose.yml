@@ -2,11 +2,16 @@
 - hosts: all
   tasks:
     - name: Download Compose
-      command: curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
       become: true
       when: ansible_os_family == "Debian"
+      get_url:
+        dest: /usr/local/bin/docker-compose 
+        url: "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 
     - name: Change Permission
       become: true
       when: ansible_os_family == "Debian"
-      command: chmod +x /usr/local/bin/docker-compose
+      file:
+        path: /usr/local/bin/docker-compose
+        mode: "a+x"
+
