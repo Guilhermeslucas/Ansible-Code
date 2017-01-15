@@ -6,6 +6,22 @@
       apt: pkg=openjdk-8-jdk state=installed update_cache=true
       become: true
       when: ansible_os_family == "Debian"
+
+    - name: Upgrade on RedHat
+      dnf:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    #install jenkins and dependencies on RedHat Based
+    - name: Install Jenkins on RedHat Based
+      dnf: name={{ item }} state=latest
+      with_items:
+        - java-1.8.0-openjdk
+        - nginx
+        - jenkins
+      become: true
+      when: ansible_os_family == "RedHat"
     
     #installing nginx, and then starting it
     - name: Install nginx Debian Based
