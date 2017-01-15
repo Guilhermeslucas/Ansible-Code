@@ -2,33 +2,37 @@
 - hosts: machines
   tasks:
     #installing jdk, to run java applications
-    - name: Install JDK
+    - name: Install JDK Debian Based
       apt: pkg=openjdk-8-jdk state=installed update_cache=true
       become: true
+      when: ansible_os_family == "Debian"
     
     #installing nginx, and then starting it
-    - name: Install nginx
+    - name: Install nginx Debian Based
       apt: pkg=nginx state=installed
       notify:
         - Start Nginx
+      when: ansible_os_family == "Debian"
     
     #add private key, in order to download jenkins
-    - name: Add key
+    - name: Add key on Debian Based
       become: true
       apt_key:
         url: "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
         state: present
       register: keyadded
+      when: ansible_os_family == "Debian"
      
     #adding jenkins repository to apt list
-    - name: Add Repo
+    - name: Add Repo on Debian Based
       become: true
       command: sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
-      register: repoadded 
+      register: repoadded
+      when: ansible_os_family == "Debian"
     
     #finally install jenkins. forcing just in case
-    - name: Install Jenkins
-      when: keyadded|success and repoadded|success
+    - name: Install Jenkins on Debian Based
+      when: keyadded|success and repoadded|success and ansible_os_family == "Debian"
       apt:
         update_cache: yes
         name: jenkins
