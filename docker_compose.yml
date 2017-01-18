@@ -1,7 +1,7 @@
 ---
 - hosts: all
   tasks:
-    - name: Download Compose
+    - name: Download and Install Compose
       become: true
       when: ansible_os_family == "Debian"
       get_url:
