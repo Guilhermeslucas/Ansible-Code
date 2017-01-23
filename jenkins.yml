@@ -54,7 +54,8 @@
         name: jenkins
         force: yes
       become: true
-
+  
+  #starts nginx after installing it
   handlers:
     - name: Start Nginx
       service: name=nginx state=started
