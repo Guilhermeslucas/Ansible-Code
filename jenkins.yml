@@ -1,5 +1,5 @@
 ---
-- hosts: machines
+- hosts: Production
   tasks:
     #installing jdk, to run java applications
     - name: Install JDK Debian Based
