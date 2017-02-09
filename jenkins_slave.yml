@@ -19,3 +19,10 @@
     - name: Create workspace on slave
       file: path={{ workspace_path }} state=directory
       become: true
+
+    - name: Change owner of the directory
+      become: true
+      file:
+        path: '{{ workspace_path }}'
+        owner: '{{ owner }}'
+        group: '{{ group }}'
