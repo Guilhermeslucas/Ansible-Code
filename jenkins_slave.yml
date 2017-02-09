@@ -11,7 +11,7 @@
 
     - name: Install Default JRE on Red Hat Based
       dnf:
-        name: default-jre
+        name: java-1.8.0-openjdk
         state: latest
       become: true
       when: ansible_os_family == "RedHat"
@@ -27,7 +27,7 @@
         owner: '{{ owner }}'
         group: '{{ group }}'
     
-    - name: Install Packages
+    - name: Install extra packages on debian based
       apt: pkg={{ item }} state=installed update_cache=true
       with_items:
         - git
@@ -37,3 +37,14 @@
         - make
       become: true
       when: ansible_os_family == "Debian"
+
+    - name: Install extra packages on Red Hat based
+      dnf: name={{ item }} state=latest
+      with_items:
+        - git
+        - python
+        - python3
+        - gcc
+        - make
+      become: true
+      when: ansible_os_family == "RedHat"
