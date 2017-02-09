@@ -1,0 +1,17 @@
+---
+- hosts: jenkins_slaves
+  tasks:
+    - name: Install Default JRE Debian Based
+      apt:
+        pkg: default-jre
+        state: installed
+        update_cache: true
+      become: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install Default JRE on Red Hat Based
+      dnf:
+        name: default-jre
+        state: latest
+      become: true
+      when: ansible_os_family == "RedHat"

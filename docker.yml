@@ -1,5 +1,5 @@
 ---
-- hosts: machines
+- hosts: Production
   tasks:
     #task to install Docker on the servers
     - name: Install Docker on Debian based
