@@ -26,3 +26,14 @@
         path: '{{ workspace_path }}'
         owner: '{{ owner }}'
         group: '{{ group }}'
+    
+    - name: Install Packages
+      apt: pkg={{ item }} state=installed update_cache=true
+      with_items:
+        - git
+        - python
+        - python3
+        - gcc
+        - make
+      become: true
+      when: ansible_os_family == "Debian"
