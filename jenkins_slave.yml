@@ -1,5 +1,5 @@
 ---
-- hosts: jenkins_slaves
+- hosts: Jenkins_slaves
   tasks:
     - name: Install Default JRE Debian Based
       apt:
