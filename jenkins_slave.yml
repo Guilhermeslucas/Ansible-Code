@@ -15,3 +15,7 @@
         state: latest
       become: true
       when: ansible_os_family == "RedHat"
+
+    - name: Create workspace on slave
+      file: path={{ workspace_path }} state=directory
+      become: true
