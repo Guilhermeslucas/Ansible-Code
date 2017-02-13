@@ -1,27 +1,24 @@
 ---
 - hosts: Jenkins_slaves
+  become: true
   tasks:
     - name: Install Default JRE Debian Based
       apt:
         pkg: default-jre
         state: installed
         update_cache: true
-      become: true
       when: ansible_os_family == "Debian"
 
     - name: Install Default JRE on Red Hat Based
       dnf:
         name: java-1.8.0-openjdk
         state: latest
-      become: true
       when: ansible_os_family == "RedHat"
 
     - name: Create workspace on slave
       file: path={{ workspace_path }} state=directory
-      become: true
 
     - name: Change owner of the directory
-      become: true
       file:
         path: '{{ workspace_path }}'
         owner: '{{ owner }}'
@@ -35,7 +32,6 @@
         - python3
         - gcc
         - make
-      become: true
       when: ansible_os_family == "Debian"
 
     - name: Install extra packages on Red Hat based
@@ -46,5 +42,4 @@
         - python3
         - gcc
         - make
-      become: true
       when: ansible_os_family == "RedHat"
