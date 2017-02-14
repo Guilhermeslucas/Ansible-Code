@@ -1,15 +1,14 @@
 ---
 - hosts: all
+  become: true
   tasks:
     - name: Download and Install Compose
-      become: true
       when: ansible_os_family == "Debian"
       get_url:
         dest: /usr/local/bin/docker-compose 
         url: "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 
     - name: Change Permission
-      become: true
       when: ansible_os_family == "Debian"
       file:
         path: /usr/local/bin/docker-compose
