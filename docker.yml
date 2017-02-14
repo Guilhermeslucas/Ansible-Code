@@ -1,5 +1,6 @@
 ---
 - hosts: Production
+  become: true
   tasks:
     #task to install Docker on the servers
     - name: Install Docker on Debian based
@@ -14,7 +15,6 @@
         name: "*"
         state: latest
       when: ansible_os_family == "RedHat"
-      become: true
     
     #installing Docker on RedHat based machines
     - name: Install Docker on RedHat Based
@@ -22,7 +22,6 @@
         name: docker-io
         state: latest
       when: ansible_os_family == "RedHat"
-      become: true
       notify:
         - Start Docker
 
@@ -30,15 +29,12 @@
     #making possible to use docker without sudo command
     - name: Restart Docker
       shell: gpasswd -a ${USER} docker && service docker restart
-      become: true
     
     #starting docker on RedHat Based
     - name: Start Docker
       command: systemctl start docker
-      become: true
       notify:
         - Configure Systemclt
     
     - name: Configure Systemclt
       command: systemctl enable docker
-      become: true
