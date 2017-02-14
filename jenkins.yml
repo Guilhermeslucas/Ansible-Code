@@ -1,10 +1,10 @@
 ---
 - hosts: Production
+  become: true
   tasks:
     #installing jdk, to run java applications
     - name: Install JDK Debian Based
       apt: pkg=openjdk-8-jdk state=installed update_cache=true
-      become: true
       when: ansible_os_family == "Debian"
 
     - name: Upgrade on RedHat
@@ -20,7 +20,6 @@
         - java-1.8.0-openjdk
         - nginx
         - jenkins
-      become: true
       when: ansible_os_family == "RedHat"
     
     #installing nginx, and then starting it
@@ -32,7 +31,6 @@
     
     #add private key, in order to download jenkins
     - name: Add key on Debian Based
-      become: true
       apt_key:
         url: "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
         state: present
@@ -41,7 +39,6 @@
      
     #adding jenkins repository to apt list
     - name: Add Repo on Debian Based
-      become: true
       command: sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
       register: repoadded
       when: ansible_os_family == "Debian"
@@ -53,7 +50,6 @@
         update_cache: yes
         name: jenkins
         force: yes
-      become: true
   
   #starts nginx after installing it
   handlers:
